@@ -5,3 +5,12 @@
 html, body{
     @apply bg-[#FFEBD9]
 }
+
+@layer base{
+    .bars{
+        @apply rounded-2xl md:h-16 h-12 
+    }
+    .bars-texts{
+        @apply md:text-2xl font-bold text-base
+    }
+}
