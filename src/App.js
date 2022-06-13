@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       {/* Div for Search and Add notes */}
-      <div className="bg-red-500 flex flex-row w-screen justify-around items-center md:mt-[62px] mt-[31px]">
+      <div className="flex flex-row w-screen justify-center items-center md:mt-[62px] mt-[31px]">
         <div className='w-3/5 relative flex flex-row'>
           <input placeholder='Search notes...' className='bars bars-texts w-full px-5'/>
           <button 
@@ -15,7 +15,7 @@ function App() {
           </button>
         </div>
         <button 
-          className='bars w-1/5 bars-texts bg-white max-w-[162px]'
+          className='bars w-1/5 bars-texts bg-white max-w-[162px] ml-7'
         >
           Add notes
         </button>
