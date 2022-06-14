@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import Modal from './components/Modal';
+import Notes from './components/Notes';
 
 function App() {
   const [showModal, setShowModal] = React.useState(false)
@@ -86,7 +87,16 @@ function App() {
       </div>
       {/* End of div for Search and Add notes */}
       {/* Div for Notes */}
-      <div className=''>Notes should be here</div>
+      <div className='notes-container bg-red-300 mt-8'>
+        {Object.keys(localStorage)
+          .filter((items) => items!=="noteNumber")
+          .map(items => <Notes 
+                          noteID={JSON.parse(localStorage.getItem(items)).noteID}
+                          noteTitle={JSON.parse(localStorage.getItem(items)).noteTitle}
+                          noteContent={JSON.parse(localStorage.getItem(items)).noteContent}
+                        />
+          )}
+      </div>
       {/* End of div for Notes */}
       
     </div>
