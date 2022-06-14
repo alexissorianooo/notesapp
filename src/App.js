@@ -1,10 +1,26 @@
 import React from 'react'
+import Modal from './components/Modal';
 
 function App() {
+  const [showModal, setShowModal] = React.useState(true)
+  const [note, setNote] = React.useState({
+    noteTitle: '',
+    noteContent: ''
+  })
+
+  function handleAddButton(){
+    setShowModal(prevState => !prevState)
+  }
+
+  function handleSaveButton(){
+    
+  }
+
   return (
-    <>
+    <div className='h-screen w-screen'>
+      {showModal && <Modal handleButton={handleAddButton}/>}
       {/* Div for Search and Add notes */}
-      <div className="flex flex-row w-screen justify-center items-center md:mt-[62px] mt-[31px]">
+      <div className="flex flex-row w-screen justify-center items-center md:pt-[62px] pt-[31px]">
         <div className='w-3/5 relative flex flex-row'>
           <input placeholder='Search notes...' className='bars bars-texts w-full px-5'/>
           <button 
@@ -16,6 +32,7 @@ function App() {
         </div>
         <button 
           className='bars w-1/5 bars-texts bg-white max-w-[162px] ml-7'
+          onClick={handleAddButton}
         >
           Add notes
         </button>
@@ -24,7 +41,8 @@ function App() {
       {/* Div for Notes */}
       <div className=''>Notes should be here</div>
       {/* End of div for Notes */}
-    </>
+      
+    </div>
   );
 }
 
