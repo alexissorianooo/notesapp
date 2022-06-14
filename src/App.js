@@ -3,11 +3,20 @@ import Modal from './components/Modal';
 
 function App() {
   const [showModal, setShowModal] = React.useState(false)
+
+  let noteKeyNumber = 0
+  if(localStorage.getItem("noteNumber") === null){
+    noteKeyNumber = localStorage.setItem("noteNumber", 0)
+  }else{
+    noteKeyNumber = localStorage.getItem("noteNumber")
+  }
+
   const [note, setNote] = React.useState({
-    noteID: 0,
+    noteID: parseInt(noteKeyNumber) || 0,
     noteTitle: '',
     noteContent: ''
   })
+  console.log("localStorage:", noteKeyNumber)
 
   function handleAddButton(){
     setShowModal(prevState => !prevState)
@@ -32,8 +41,11 @@ function App() {
   }
 
   function handleSaveButton(){
-    localStorage.setItem("note"+note.noteID, JSON.stringify(note))
-    resetNote()
+    if(note.noteContent !== '' && note.noteTitle !== ''){
+      localStorage.setItem("note"+note.noteID, JSON.stringify(note))
+      localStorage.setItem("noteNumber", parseInt(noteKeyNumber)+1)
+      resetNote()
+    }
     setShowModal(prevState => !prevState)
   }
 
@@ -46,8 +58,6 @@ function App() {
       }
     })
   }
-
-  console.log(note)
 
   return (
     <div className='h-screen w-screen'>
