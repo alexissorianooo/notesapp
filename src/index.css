@@ -17,6 +17,9 @@ html, body{
         @apply rounded-2xl md:h-16 h-12 sm:w-1/4 max-w-[180px] md:mr-20
     }
     .notes-container{
-        @apply flex flex-col items-center
+        @apply flex flex-col justify-center items-center max-w-5xl m-auto
+    }
+    .notes-container-responsive{
+        @apply grid sm:grid-cols-2 lg:grid-cols-3 gap-4
     }
 }

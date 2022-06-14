@@ -15,7 +15,8 @@ function App() {
   const [note, setNote] = React.useState({
     noteID: parseInt(noteKeyNumber) || 0,
     noteTitle: '',
-    noteContent: ''
+    noteContent: '',
+    noteFavorite: false
   })
   console.log("localStorage:", noteKeyNumber)
 
@@ -87,13 +88,15 @@ function App() {
       </div>
       {/* End of div for Search and Add notes */}
       {/* Div for Notes */}
-      <div className='notes-container bg-red-300 mt-8'>
+      <div className='notes-container notes-container-responsive mt-8'>
         {Object.keys(localStorage)
           .filter((items) => items!=="noteNumber")
           .map(items => <Notes 
+                          key={JSON.parse(localStorage.getItem(items)).noteID}
                           noteID={JSON.parse(localStorage.getItem(items)).noteID}
                           noteTitle={JSON.parse(localStorage.getItem(items)).noteTitle}
                           noteContent={JSON.parse(localStorage.getItem(items)).noteContent}
+                          noteFavorite={JSON.parse(localStorage.getItem(items)).noteFavorite}
                         />
           )}
       </div>
