@@ -8,10 +8,10 @@ html, body{
 
 @layer base{
     .bars{
-        @apply rounded-2xl md:h-16 h-12 
+        @apply rounded-2xl md:h-16 h-14
     }
     .bars-texts{
-        @apply md:text-2xl font-bold text-base
+        @apply md:text-2xl font-bold text-xl
     }
     .button{
         @apply rounded-2xl md:h-16 h-12 sm:w-1/4 max-w-[180px] md:mr-20
