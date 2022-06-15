@@ -119,6 +119,7 @@ function App() {
           .filter((items) => items!=="noteNumber")
           .map(items => items.substring(4))
           .sort((a,b) => {return a-b})
+          .filter(items => /liked/ig.test(JSON.parse(localStorage.getItem("note"+items)).noteTitle) || /liked/ig.test(JSON.parse(localStorage.getItem("note"+items)).noteContent))
           .map(items => <Notes 
                           key={JSON.parse(localStorage.getItem("note"+items)).noteID}
                           noteID={JSON.parse(localStorage.getItem("note"+items)).noteID}
