@@ -10,10 +10,10 @@ export default function Notes(props){
                 <div className='w-4/5'>{props.noteTitle}</div>
                 <br/>
                 <button
-                    className='w-1/5'
+                    className='w-1/5 text-2xl'
                     onClick={props.handleFavoriteNotes}
                 >
-                    <i className={`${favorite ? "fa-solid text-red-500" : "fa-regular"} fa-heart`}></i>
+                    <i className={`${favorite ? "fa-solid text-red-500" : "fa-regular"} fa-heart hover:text-red-500`}></i>
                 </button>
             </div>
             <hr />
