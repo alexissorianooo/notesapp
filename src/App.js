@@ -4,6 +4,7 @@ import Notes from './components/Notes';
 
 function App() {
   const [showModal, setShowModal] = React.useState(false)
+  const [favorite, setFavorite] = React.useState(false)
 
   let noteKeyNumber = 0
   if(localStorage.getItem("noteNumber") === null){
@@ -16,9 +17,8 @@ function App() {
     noteID: parseInt(noteKeyNumber) || 0,
     noteTitle: '',
     noteContent: '',
-    noteFavorite: false
+    noteFavorite: favorite
   })
-  console.log("localStorage:", noteKeyNumber)
 
   function handleAddButton(){
     setShowModal(prevState => !prevState)
@@ -43,11 +43,20 @@ function App() {
   }
 
   function handleSaveButton(){
+    if(favorite){
+      setNote(prevState => {
+        return{
+          ...prevState,
+          noteFavorite: favorite
+        }
+      })
+    }
     if(note.noteContent !== '' && note.noteTitle !== ''){
       localStorage.setItem("note"+note.noteID, JSON.stringify(note))
       localStorage.setItem("noteNumber", parseInt(noteKeyNumber)+1)
       resetNote()
     }
+    setFavorite(false) // reset the favorite to false
     setShowModal(prevState => !prevState)
   }
 
@@ -61,12 +70,30 @@ function App() {
     })
   }
 
+  function handleFavorite(){
+    setFavorite(prevState => {
+      return !prevState
+    })
+  }
+
+  function handleFavoriteNotes(noteIDNumber){
+    let noteID = "note"+noteIDNumber
+    console.log(noteID)
+    let parsedlocalStorage = JSON.parse(localStorage.getItem(noteID))
+    let updatedFavorite = {...parsedlocalStorage, noteFavorite: !parsedlocalStorage.noteFavorite}
+    localStorage.setItem(noteID, JSON.stringify(updatedFavorite))
+    // localStorage.setItem("note"+notesID)
+    resetNote()
+  }
+
   return (
     <div className='h-screen w-screen'>
       {showModal && <Modal 
         handleButton={handleAddButton}
         handleChange={(event) => handleInput(event)}
         handleSave={handleSaveButton}
+        isFavorite={favorite}
+        handleFavorite={handleFavorite}
         />}
       {/* Div for Search and Add notes */}
       <div className="flex flex-row w-screen justify-center items-center md:pt-[62px] pt-[31px]">
@@ -91,12 +118,15 @@ function App() {
       <div className='notes-container notes-container-responsive mt-8'>
         {Object.keys(localStorage)
           .filter((items) => items!=="noteNumber")
+          .map(items => items.substring(4))
+          .sort((a,b) => {return a-b})
           .map(items => <Notes 
-                          key={JSON.parse(localStorage.getItem(items)).noteID}
-                          noteID={JSON.parse(localStorage.getItem(items)).noteID}
-                          noteTitle={JSON.parse(localStorage.getItem(items)).noteTitle}
-                          noteContent={JSON.parse(localStorage.getItem(items)).noteContent}
-                          noteFavorite={JSON.parse(localStorage.getItem(items)).noteFavorite}
+                          key={JSON.parse(localStorage.getItem("note"+items)).noteID}
+                          noteID={JSON.parse(localStorage.getItem("note"+items)).noteID}
+                          noteTitle={JSON.parse(localStorage.getItem("note"+items)).noteTitle}
+                          noteContent={JSON.parse(localStorage.getItem("note"+items)).noteContent}
+                          noteFavorite={JSON.parse(localStorage.getItem("note"+items)).noteFavorite}
+                          handleFavoriteNotes={() => handleFavoriteNotes(JSON.parse(localStorage.getItem("note"+items)).noteID)}
                         />
           )}
       </div>
