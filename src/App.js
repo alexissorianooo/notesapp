@@ -37,28 +37,21 @@ function App() {
       return{
         ...prevState,
         noteTitle: '',
-        noteContent: ''
+        noteContent: '',
       }
     })
   }
 
   function handleSaveButton(){
-    if(favorite){
-      setNote(prevState => {
-        return{
-          ...prevState,
-          noteFavorite: favorite
-        }
-      })
-    }
     if(note.noteContent !== '' && note.noteTitle !== ''){
-      localStorage.setItem("note"+note.noteID, JSON.stringify(note))
+      localStorage.setItem("note"+note.noteID, JSON.stringify({...note, noteFavorite: favorite})) // set the noteFavorite to localStorage setItem
       localStorage.setItem("noteNumber", parseInt(noteKeyNumber)+1)
-      resetNote()
+      resetNote() 
     }
-    setFavorite(false) // reset the favorite to false
+    setFavorite(false)
     setShowModal(prevState => !prevState)
   }
+  console.log(favorite, note.noteFavorite)
 
   function handleInput(event){
     let {name, value} = event.target
@@ -78,11 +71,17 @@ function App() {
 
   function handleFavoriteNotes(noteIDNumber){
     let noteID = "note"+noteIDNumber
-    console.log(noteID)
     let parsedlocalStorage = JSON.parse(localStorage.getItem(noteID))
     let updatedFavorite = {...parsedlocalStorage, noteFavorite: !parsedlocalStorage.noteFavorite}
     localStorage.setItem(noteID, JSON.stringify(updatedFavorite))
     // localStorage.setItem("note"+notesID)
+    resetNote()
+  }
+
+  function handleTrash(noteIDNumber){
+    console.log(noteIDNumber)
+    let noteID = "note"+noteIDNumber
+    localStorage.removeItem(noteID)
     resetNote()
   }
 
@@ -127,6 +126,7 @@ function App() {
                           noteContent={JSON.parse(localStorage.getItem("note"+items)).noteContent}
                           noteFavorite={JSON.parse(localStorage.getItem("note"+items)).noteFavorite}
                           handleFavoriteNotes={() => handleFavoriteNotes(JSON.parse(localStorage.getItem("note"+items)).noteID)}
+                          handleTrash={() => handleTrash(JSON.parse(localStorage.getItem("note"+items)).noteID)}
                         />
           )}
       </div>
