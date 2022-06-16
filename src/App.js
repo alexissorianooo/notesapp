@@ -1,4 +1,5 @@
 import React from 'react';
+import Background from './components/Background';
 import Modal from './components/Modal';
 import Notes from './components/Notes';
 
@@ -193,7 +194,7 @@ function App() {
           )}
       </div>
       {/* End of div for Notes */}
-      
+      <Background />
     </div>
   );
 }
