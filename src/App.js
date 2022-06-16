@@ -114,9 +114,9 @@ function App() {
           />
           
         </div>
-        <div className='w-full sm:w-2/5 lg:w-1/5 xl:w-1/6 sm:mt-0 flex flex-row justify-center items-center mt-3'>
+        <div className='w-full sm:w-2/5 lg:w-1/5 xl:w-1/6 sm:mt-0 flex flex-row justify-center items-center mt-3 sm:justify-start'>
           <button 
-            className='bars bars-texts bar-buttons sm:ml-7 md:ml-4 xl:ml-0 rounded-full p-5 flex justify-center items-center'
+            className='bars bars-texts bar-buttons sm:ml-7 rounded-full p-5 flex justify-center items-center'
           >
             <i className="fa-solid text-red-500 fa-heart"></i>
           </button>
