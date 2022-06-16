@@ -105,25 +105,28 @@ function App() {
         handleFavorite={handleFavorite}
         />}
       {/* Div for Search and Add notes */}
-      <div className="flex flex-col w-screen justify-center items-center pt-[62px] sm:flex-row">
-        <div className='sm:w-3/5 w-4/5 relative flex flex-row'>
+      <div className="flex flex-col w-screen justify-center items-center pt-[62px] sm:flex-row ">
+        <div className='sm:w-3/5 w-4/5 relative flex flex-row sm:ml-7'>
           <input 
             placeholder='Search notes...' 
             className='bars bars-texts w-full px-5 focus:outline-none focus:drop-shadow-xl'
             onChange={handleSearch}
           />
+          
+        </div>
+        <div className='w-full sm:w-2/5 lg:w-1/5 xl:w-1/6 sm:mt-0 flex flex-row justify-center items-center mt-3'>
           <button 
-            className='bars bars-texts min-w-[10%] w-1/5 lg:w-[10%] absolute right-0 bg-slate-200 hover:bg-slate-300'
+            className='bars bars-texts bar-buttons sm:ml-7 md:ml-4 xl:ml-0 rounded-full p-5 flex justify-center items-center'
           >
-            <i className="fa-solid fa-magnifying-glass"></i>
+            <i className="fa-solid text-red-500 fa-heart"></i>
+          </button>
+          <button 
+            className='bars bars-texts bar-buttons sm:ml-7 sm:w-2/4 w-3/5 xl:rounded-2xl sm:max-w-[162px] ml-4'
+            onClick={handleAddButton}
+          >
+            Add Notes
           </button>
         </div>
-        <button 
-          className='bars sm:w-1/5 mt-3 sm:mt-0 w-4/5 bars-texts bg-white sm:max-w-[162px] sm:ml-7'
-          onClick={handleAddButton}
-        >
-          Add notes
-        </button>
       </div>
       {/* End of div for Search and Add notes */}
       {/* Div for Notes */}

@@ -13,6 +13,9 @@ html, body{
     .bars-texts{
         @apply md:text-2xl font-bold text-xl
     }
+    .bar-buttons{
+        @apply bg-white transition ease-in-out hover:scale-110
+    }
     .button{
         @apply rounded-2xl md:h-16 h-12 sm:w-1/4 max-w-[180px] md:mr-20
     }
