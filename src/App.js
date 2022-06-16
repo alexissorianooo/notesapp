@@ -1,5 +1,6 @@
 import React from 'react';
-import Background from './components/Background';
+// import Background from './components/Background';
+// import BackgroundStatic from './components/BackgroundStatic';
 import Modal from './components/Modal';
 import Notes from './components/Notes';
 
@@ -129,7 +130,7 @@ function App() {
   }
 
   return (
-    <div className='h-screen w-screen'>
+    <div className='h-full w-full'>
       {showModal && <Modal 
         handleButton={handleAddButton}
         handleChange={(event) => handleInput(event)}
@@ -148,7 +149,7 @@ function App() {
         noteContent={note.noteContent}
       />}
       {/* Div for Search and Add notes */}
-      <div className="flex flex-col w-screen justify-center items-center pt-[62px] sm:flex-row ">
+      <div className="flex flex-col w-full justify-center items-center pt-[62px] sm:flex-row ">
         <div className='sm:w-3/5 w-4/5 relative flex flex-row sm:ml-7'>
           <input 
             placeholder='Search notes...' 
@@ -174,7 +175,7 @@ function App() {
       </div>
       {/* End of div for Search and Add notes */}
       {/* Div for Notes */}
-      <div className='notes-container notes-container-responsive mt-8'>
+      <div className='notes-container notes-container-responsive mt-8 mb-8'>
         {Object.keys(localStorage)
           .filter((items) => items!=="noteNumber" )
           .map(items => items.substring(4))
@@ -194,7 +195,6 @@ function App() {
           )}
       </div>
       {/* End of div for Notes */}
-      <Background />
     </div>
   );
 }

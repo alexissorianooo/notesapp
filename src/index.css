@@ -31,6 +31,9 @@ html, body{
     .circle-move{
         @apply animate-wave
     }
+    .circle-bg{
+        @apply fixed -bottom-[65%] w-[996px] h-[996px] rounded-full -z-[1]
+    }
 }
 
 @layer utilities{
