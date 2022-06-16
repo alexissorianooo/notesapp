@@ -6,6 +6,8 @@ function App() {
   const [showModal, setShowModal] = React.useState(false)
   const [favorite, setFavorite] = React.useState(false)
   const [search, setSearch] = React.useState('')
+  const [showFavorite, setShowFavorite] = React.useState(false)
+  const [showEditModal, setShowEditModal] = React.useState(false)
   
   let noteKeyNumber = 0
   if(localStorage.getItem("noteNumber") === null){
@@ -18,11 +20,12 @@ function App() {
     noteID: parseInt(noteKeyNumber) || 0,
     noteTitle: '',
     noteContent: '',
-    noteFavorite: favorite
+    noteFavorite: favorite,
   })
 
   function handleAddButton(){
     setShowModal(prevState => !prevState)
+    setShowEditModal(false)
     if(!showModal){
       setNote(prevState => {
         return{
@@ -39,6 +42,7 @@ function App() {
         ...prevState,
         noteTitle: '',
         noteContent: '',
+        noteID: parseInt(noteKeyNumber) || 0
       }
     })
   }
@@ -50,7 +54,8 @@ function App() {
       resetNote() 
     }
     setFavorite(false)
-    setShowModal(prevState => !prevState)
+    setShowModal(false)
+    setShowEditModal(false)
   }
 
   function handleInput(event){
@@ -63,10 +68,14 @@ function App() {
     })
   }
 
-  function handleFavorite(){
-    setFavorite(prevState => {
-      return !prevState
-    })
+  function handleFavorite(edit,favorite){
+    if(edit){
+      setFavorite(!favorite)
+    }else{
+      setFavorite(prevState => {
+        return !prevState
+      })
+    }
   }
 
   function handleFavoriteNotes(noteIDNumber){
@@ -95,6 +104,29 @@ function App() {
     regexSearch = new RegExp(`${search}`, "i")
   }
 
+  function handleShowFavorite(){
+    setShowFavorite(prevState => !prevState)
+  }
+
+  function handleTransferToState(noteObject){
+    setFavorite(noteObject.noteFavorite)
+    setNote(prevState => {
+      return{
+        ...prevState,
+        noteID: noteObject.noteID,
+        noteTitle: noteObject.noteTitle,
+        noteContent: noteObject.noteContent,
+        noteFavorite: noteObject.noteFavorite,
+      }
+    })
+  }
+
+
+  function handleShowEditModal(){ // shows the modal for edit
+    setShowModal(true)
+    setShowEditModal(prevState => !prevState)
+  }
+
   return (
     <div className='h-screen w-screen'>
       {showModal && <Modal 
@@ -102,8 +134,18 @@ function App() {
         handleChange={(event) => handleInput(event)}
         handleSave={handleSaveButton}
         isFavorite={favorite}
-        handleFavorite={handleFavorite}
+        handleFavorite={() => {handleFavorite(false);}}
         />}
+      {showEditModal && <Modal 
+        handleButton={() => {handleAddButton();resetNote();}}
+        handleChange={(event) => handleInput(event)}
+        handleSave={handleSaveButton}
+        isFavorite={favorite}
+        handleFavorite={() => {handleFavorite(true,note.noteFavorite);}}
+        noteID={note.noteID} 
+        noteTitle={note.noteTitle}
+        noteContent={note.noteContent}
+      />}
       {/* Div for Search and Add notes */}
       <div className="flex flex-col w-screen justify-center items-center pt-[62px] sm:flex-row ">
         <div className='sm:w-3/5 w-4/5 relative flex flex-row sm:ml-7'>
@@ -116,9 +158,10 @@ function App() {
         </div>
         <div className='w-full sm:w-2/5 lg:w-1/5 xl:w-1/6 sm:mt-0 flex flex-row justify-center items-center mt-3 sm:justify-start'>
           <button 
-            className='bars bars-texts bar-buttons sm:ml-7 rounded-full p-5 flex justify-center items-center'
+            className={`bars bars-texts bar-buttons sm:ml-7 rounded-full p-5 flex justify-center items-center ${showFavorite && `bg-red-500`}`}
+            onClick={handleShowFavorite}
           >
-            <i className="fa-solid text-red-500 fa-heart"></i>
+            <i className={`fa-solid text-red-500 fa-heart ${showFavorite && `text-white`}`}></i>
           </button>
           <button 
             className='bars bars-texts bar-buttons sm:ml-7 sm:w-2/4 w-3/5 xl:rounded-2xl sm:max-w-[162px] ml-4'
@@ -132,10 +175,11 @@ function App() {
       {/* Div for Notes */}
       <div className='notes-container notes-container-responsive mt-8'>
         {Object.keys(localStorage)
-          .filter((items) => items!=="noteNumber")
+          .filter((items) => items!=="noteNumber" )
           .map(items => items.substring(4))
           .sort((a,b) => {return a-b})
           .filter(items => search ? regexSearch.test(JSON.parse(localStorage.getItem("note"+items)).noteTitle) || regexSearch.test(JSON.parse(localStorage.getItem("note"+items)).noteContent) : items)
+          .filter(items => showFavorite ? JSON.parse(localStorage.getItem("note"+items)).noteFavorite === true : items) // for favorite
           .map(items => <Notes 
                           key={JSON.parse(localStorage.getItem("note"+items)).noteID}
                           noteID={JSON.parse(localStorage.getItem("note"+items)).noteID}
@@ -144,6 +188,7 @@ function App() {
                           noteFavorite={JSON.parse(localStorage.getItem("note"+items)).noteFavorite}
                           handleFavoriteNotes={() => handleFavoriteNotes(JSON.parse(localStorage.getItem("note"+items)).noteID)}
                           handleTrash={() => handleTrash(JSON.parse(localStorage.getItem("note"+items)).noteID)}
+                          handleShowEditModal={() => {handleTransferToState(JSON.parse(localStorage.getItem("note"+items))); handleShowEditModal();}}
                         />
           )}
       </div>
