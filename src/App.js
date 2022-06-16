@@ -5,7 +5,8 @@ import Notes from './components/Notes';
 function App() {
   const [showModal, setShowModal] = React.useState(false)
   const [favorite, setFavorite] = React.useState(false)
-
+  const [search, setSearch] = React.useState('')
+  
   let noteKeyNumber = 0
   if(localStorage.getItem("noteNumber") === null){
     noteKeyNumber = localStorage.setItem("noteNumber", 0)
@@ -51,7 +52,6 @@ function App() {
     setFavorite(false)
     setShowModal(prevState => !prevState)
   }
-  console.log(favorite, note.noteFavorite)
 
   function handleInput(event){
     let {name, value} = event.target
@@ -85,6 +85,16 @@ function App() {
     resetNote()
   }
 
+  function handleSearch(event){
+    let {value} = event.target
+    setSearch(value)
+  }
+  
+  let regexSearch = ''
+  if(search){
+    regexSearch = new RegExp(`${search}`, "i")
+  }
+
   return (
     <div className='h-screen w-screen'>
       {showModal && <Modal 
@@ -97,10 +107,13 @@ function App() {
       {/* Div for Search and Add notes */}
       <div className="flex flex-col w-screen justify-center items-center pt-[62px] sm:flex-row">
         <div className='sm:w-3/5 w-4/5 relative flex flex-row'>
-          <input placeholder='Search notes...' className='bars bars-texts w-full px-5 focus:outline-none focus:drop-shadow-xl'/>
+          <input 
+            placeholder='Search notes...' 
+            className='bars bars-texts w-full px-5 focus:outline-none focus:drop-shadow-xl'
+            onChange={handleSearch}
+          />
           <button 
             className='bars bars-texts min-w-[10%] w-1/5 lg:w-[10%] absolute right-0 bg-slate-200 hover:bg-slate-300'
-            
           >
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
@@ -119,7 +132,7 @@ function App() {
           .filter((items) => items!=="noteNumber")
           .map(items => items.substring(4))
           .sort((a,b) => {return a-b})
-          .filter(items => /liked/ig.test(JSON.parse(localStorage.getItem("note"+items)).noteTitle) || /liked/ig.test(JSON.parse(localStorage.getItem("note"+items)).noteContent))
+          .filter(items => search ? regexSearch.test(JSON.parse(localStorage.getItem("note"+items)).noteTitle) || regexSearch.test(JSON.parse(localStorage.getItem("note"+items)).noteContent) : items)
           .map(items => <Notes 
                           key={JSON.parse(localStorage.getItem("note"+items)).noteID}
                           noteID={JSON.parse(localStorage.getItem("note"+items)).noteID}
