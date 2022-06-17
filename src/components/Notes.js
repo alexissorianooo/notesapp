@@ -19,10 +19,14 @@ export default function Notes(props){
                 </button>
             </div>
             <hr />
-            <div className='h-3/5 p-4 text-lg' onClick={props.handleShowEditModal}>
+            <div className='min-h-3/5 p-4 pb-12 text-lg' onClick={props.handleShowEditModal}>
                 {props.noteContent}
             </div>
-            <div className='h-1/5 pb-4 px-4 flex'>
+            
+            <div className='absolute bottom-4 right-8 flex'> 
+                {/* currently the trash icon is at the bottom most part of the note div */}
+                {/* min-h-1/5 pb-4 px-4 */}
+                {/* this will make the trash icon at the bottom of the note content */}
                 <div className='w-4/5' onClick={props.handleShowEditModal}></div>
                 <button 
                     className='w-1/5 text-2xl'

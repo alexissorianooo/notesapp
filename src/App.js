@@ -13,7 +13,7 @@ function App() {
   
   let noteKeyNumber = 0
   if(localStorage.getItem("noteNumber") === null){
-    noteKeyNumber = localStorage.setItem("noteNumber", 0)
+    noteKeyNumber = localStorage.setItem("noteNumber", 1)
   }else{
     noteKeyNumber = localStorage.getItem("noteNumber")
   }
