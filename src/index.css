@@ -32,10 +32,10 @@ html, body{
         @apply animate-wave
     }
     .circle-bg{
-        @apply fixed -bottom-[130%] md:-bottom-[75%] w-[996px] h-[996px] rounded-full 
+        @apply fixed -bottom-[110%] md:-bottom-[75%] w-[996px] h-[996px] rounded-full 
     }
     .circle-second-bg{
-        @apply -bottom-[140%] md:-bottom-[75%]
+        @apply -bottom-[115%] md:-bottom-[75%]
     }
 }
 
