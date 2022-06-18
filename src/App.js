@@ -1,7 +1,8 @@
 import React from 'react';
 // import Background from './components/Background';
-// import BackgroundStatic from './components/BackgroundStatic';
+import BackgroundStatic from './components/BackgroundStatic';
 import Modal from './components/Modal';
+import Navbar from './components/Navbar';
 import Notes from './components/Notes';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   const [search, setSearch] = React.useState('')
   const [showFavorite, setShowFavorite] = React.useState(false)
   const [showEditModal, setShowEditModal] = React.useState(false)
+  const [darkMode, setDarkMode] = React.useState(false)
   
   let noteKeyNumber = 0
   if(localStorage.getItem("noteNumber") === null){
@@ -17,7 +19,6 @@ function App() {
   }else{
     noteKeyNumber = localStorage.getItem("noteNumber")
   }
-
   const [note, setNote] = React.useState({
     noteID: parseInt(noteKeyNumber) || 0,
     noteTitle: '',
@@ -123,14 +124,19 @@ function App() {
     })
   }
 
-
   function handleShowEditModal(){ // shows the modal for edit
     setShowModal(true)
     setShowEditModal(prevState => !prevState)
   }
 
+  function handleDarkButton(){
+    setDarkMode(prevState => !prevState)
+  }
+  // localStorage.setItem("isDarkMode", darkMode)
+
   return (
-    <div className='h-full w-full'>
+    <div className={`h-screen w-screen ${darkMode ? 'bg-gray-700' : 'bg-[#FFEBD9]'}`}>
+      <BackgroundStatic />
       {showModal && <Modal 
         handleButton={handleAddButton}
         handleChange={(event) => handleInput(event)}
@@ -148,8 +154,12 @@ function App() {
         noteTitle={note.noteTitle}
         noteContent={note.noteContent}
       />}
+      <Navbar 
+        darkMode={darkMode}
+        handleDarkButton={handleDarkButton}
+      />
       {/* Div for Search and Add notes */}
-      <div className="flex flex-col w-full justify-center items-center pt-[62px] sm:flex-row ">
+      <div className="flex flex-col w-full justify-center items-center pt-[31px] xl:pt-[62px] sm:flex-row ">
         <div className='sm:w-3/5 w-4/5 relative flex flex-row sm:ml-7'>
           <input 
             placeholder='Search notes...' 

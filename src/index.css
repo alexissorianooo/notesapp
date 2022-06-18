@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body{
-    @apply bg-[#FFEBD9]
+    @apply h-screen w-screen 
 }
 
 @layer base{
@@ -26,13 +26,16 @@ html, body{
         @apply grid sm:grid-cols-2 lg:grid-cols-3 gap-4
     }
     .circle-small{
-        @apply fixed -bottom-[90%] sm:-bottom-[45%] -left-[45%] w-[664px] h-[664px] rounded-full scale-150
+        @apply fixed -bottom-[130%] md:-bottom-[75%] -left-[45%] w-[996px] h-[996px] rounded-full scale-150
     }
     .circle-move{
         @apply animate-wave
     }
     .circle-bg{
-        @apply fixed -bottom-[65%] w-[996px] h-[996px] rounded-full -z-[1]
+        @apply fixed -bottom-[130%] md:-bottom-[75%] w-[996px] h-[996px] rounded-full 
+    }
+    .circle-second-bg{
+        @apply -bottom-[140%] md:-bottom-[75%]
     }
 }
 

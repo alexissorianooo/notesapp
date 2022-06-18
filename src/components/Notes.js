@@ -6,7 +6,7 @@ export default function Notes(props){
 
     return(
         <div 
-            className='bg-white w-72 min-h-72 my-2 sm:h-full sm:justify-self-center drop-shadow-sm hover:drop-shadow-lg flex flex-col'
+            className='bg-white w-72 min-h-72 my-2 sm:h-full sm:justify-self-center drop-shadow-sm hover:drop-shadow-lg hover:-translate-y-1 transition flex flex-col'
         >
             <div className='min-h-1/5 p-4 font-bold text-2xl flex'>
                 <div className='w-4/5' onClick={props.handleShowEditModal}>{props.noteTitle}</div>
