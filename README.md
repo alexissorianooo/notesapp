@@ -8,6 +8,10 @@ Tech Stack: </br>
 -TailwindCSS </br>
 
 Screenshot: </br>
+</br>
+
+![SampleImage](./src/Images/screenshot1.png)
+
 
 Additional learning:
 1. Using localStorage to save data for every user
