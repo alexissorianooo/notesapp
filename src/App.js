@@ -132,7 +132,6 @@ function App() {
   function handleDarkButton(){
     setDarkMode(prevState => !prevState)
   }
-  // localStorage.setItem("isDarkMode", darkMode)
 
   return (
     <div className={`h-screen w-screen ${darkMode ? 'bg-gray-700' : 'bg-[#FFEBD9]'}`}>
